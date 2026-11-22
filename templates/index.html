@@ -31,24 +31,33 @@
             max-width: 80%; /* Agar teks tidak terlalu melebar */
             line-height: 1.5; /* Jarak antar baris lebih nyaman dibaca */
         }
+        .actions {
+            position: absolute;
+            top: 60%;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
         #yesBtn, #noBtn {
-            padding: 15px 40px;
+            padding: 15px clamp(20px, 5vw, 40px);
             font-size: 18px;
             border: none;
             cursor: pointer;
             transition: all 0.3s ease-in-out;
-            margin: 10px;
+            margin: 0;
             border-radius: 12px;
             font-weight: 600;
-            position: absolute;
+            flex-shrink: 0;
         }
         #yesBtn {
             background-color: #ff4d6d;
             color: white;
+            text-decoration: none;
             font-size: 20px;
             box-shadow: 0px 0px 12px rgba(255, 77, 109, 0.8);
-            top: 60%;
-            left: 40%;
         }
         #yesBtn:hover, #noBtn:hover {
             transform: scale(1.2);
@@ -57,11 +66,9 @@
         #noBtn {
             background-color: #dc3545;
             color: white;
-            top: 60%;
-            left: 50%;
         }
         .move {
-            transition: transform 0.4s ease-in-out, top 0.4s ease-in-out, left 0.4s ease-in-out;
+            transition: transform 0.4s ease-in-out;
         }
 
         .gif-container img {
@@ -113,11 +120,12 @@ Ar haan, aajke call korbi please? 🥹❤️ Ar akta kotha , ami toke try marchh
         <img src="https://media.giphy.com/media/E4QK0D5v7RLkXIgVO7/giphy.gif" class="gif4">
     </div>
 
-    <button id="yesBtn" onclick="goToConfirm()">YES 💖</button>
-    <button id="noBtn" class="move" onclick="moveNo()">NO 😭</button>
+    <div class="actions">
+        <a id="yesBtn" href="/confirm">YES 💖</a>
+        <button id="noBtn" class="move" type="button">NO 😭</button>
+    </div>
 
     <script>
-        let yesBtn = document.getElementById("yesBtn");
         let noBtn = document.getElementById("noBtn");
         let mainText = document.getElementById("mainText");
 
@@ -132,23 +140,27 @@ Ar haan, aajke call korbi please? 🥹❤️ Ar akta kotha , ami toke try marchh
         ];
         let noClickCount = 0;
 
-        function goToConfirm() {
-            window.location.href = "/confirm";
-        }
-
         function moveNo() {
-            let randomX = Math.floor(Math.random() * 50) - 25;
-            let randomY = Math.floor(Math.random() * 50) - 25;
+            const bounds = noBtn.getBoundingClientRect();
+            const randomX = (Math.random() - 0.5) * window.innerWidth * 0.5;
+            const randomY = (Math.random() - 0.5) * window.innerHeight * 0.5;
+            const nextX = Math.max(8, Math.min(bounds.left + randomX, window.innerWidth - bounds.width - 8));
+            let nextY = Math.max(8, Math.min(bounds.top + randomY, window.innerHeight - bounds.height - 8));
+            const yesBounds = document.getElementById("yesBtn").getBoundingClientRect();
 
-            let currentX = parseInt(noBtn.style.left) || 50;
-            let currentY = parseInt(noBtn.style.top) || 60;
+            if (nextX < yesBounds.right + 8 && nextX + bounds.width > yesBounds.left - 8 &&
+                nextY < yesBounds.bottom + 8 && nextY + bounds.height > yesBounds.top - 8) {
+                nextY = Math.max(8, yesBounds.top - bounds.height - 16);
+            }
 
-            noBtn.style.left = (currentX + randomX) + "%";
-            noBtn.style.top = (currentY + randomY) + "%";
+            const origin = noBtn.offsetParent.getBoundingClientRect();
+            noBtn.style.transform = `translate(${nextX - origin.left - noBtn.offsetLeft}px, ${nextY - origin.top - noBtn.offsetTop}px)`;
 
-            mainText.innerHTML = noTexts[noClickCount % noTexts.length];
+            mainText.textContent = noTexts[noClickCount % noTexts.length];
             noClickCount++;
         }
+
+        noBtn.addEventListener("click", moveNo);
     </script>
 </body>
 </html>
