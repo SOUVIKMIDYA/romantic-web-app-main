@@ -1,0 +1,9 @@
+[build]
+  # Both Flask routes serve standalone HTML, so no build step is needed.
+  command = ""
+  publish = "templates"
+
+[[redirects]]
+  from = "/confirm"
+  to = "/confirm.html"
+  status = 200
