@@ -33,6 +33,14 @@ You can also try running this locally or using any free hosting service.
 
 ---
 
+## Deployment security
+
+The Yes button links directly to `/confirm`. The buttons use a responsive row to prevent No from covering Yes on phones. No moves within the viewport and avoids covering Yes. The confirmation page uses ordinary links to WhatsApp and Instagram and does not run JavaScript.
+
+Netlify applies the security headers in `templates/_headers`. The Content Security Policy permits only the homepage's approved inline script, the existing image providers, and Google Fonts. If you edit the homepage script, update its SHA-256 hash in `_headers` so the No button continues to work.
+
+Chrome's red “Dangerous site” screen is controlled by Google Safe Browsing. These security headers do not remove a Safe Browsing classification. Check the Security Issues report in Google Search Console and request a review after addressing any reported issues. If the classification is incorrect, use [Google's incorrect-warning report](https://safebrowsing.google.com/safebrowsing/report_error/). Do not disable browser protection to work around the warning.
+
 ##  Installation  
 Clone this repository:  
 ```sh

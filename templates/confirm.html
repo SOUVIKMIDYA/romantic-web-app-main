@@ -40,6 +40,7 @@
         .btn {
             padding: 12px 30px;
             font-size: 18px;
+            text-decoration: none;
             border: none;
             cursor: pointer;
             border-radius: 12px;
@@ -110,30 +111,15 @@
     </div>
 
     <div>
-        <button id="whatsappBtn" class="btn" onclick="goToWhatsApp()">
+        <a id="whatsappBtn" class="btn" href="https://wa.me/9883396106?text=I%20want%20to%20goooo%20%3A*" rel="noreferrer">
             <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
             Say hmm call korbo on WhatsApp
-        </button>
-        <button id="instagramBtn" class="btn" onclick="goToInstagram()">
+        </a>
+        <a id="instagramBtn" class="btn" href="https://www.instagram.com/souvik.midya.167/" target="_blank" rel="noopener noreferrer">
             <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
             Say hmm call korbo on Instagram
-        </button>
+        </a>
     </div>
 
-    <script>
-        function goToWhatsApp() {
-            let phone = "9883396106"; 
-            let message = "I want to goooo :*";
-            let url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-            window.location.href = url;
-        }
-
-        
-
-        function goToInstagram() {
-            let instaUrl = `https://www.instagram.com/souvik.midya.167/`;
-            window.open(instaUrl, "_blank");
-        }
-    </script>
 </body>
 </html>
